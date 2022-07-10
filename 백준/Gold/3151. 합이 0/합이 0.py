@@ -1,16 +1,23 @@
-import sys
-from bisect import bisect_left, bisect_right
- 
-input = lambda: sys.stdin.readline().rstrip()
-N = int(input())
-numbers = list(map(int, input().split()))
-numbers.sort()
-cache = set(numbers)
+from bisect import bisect_left
+from sys import stdin
+
+input = stdin.readline
+n = int(input())
+arr = list(map(int, input().split()))
+arr.sort()
+
 answer = 0
-for i in range(N):
-    for j in range(i+1, N):
-        target = -(numbers[i] + numbers[j])
-        if target in cache:
-            answer += bisect_right(numbers, target, j+1, N) - bisect_left(numbers, target, j+1, N)
- 
+for start in range(n - 2):
+    left, right = start + 1, n - 1
+    while left < right:
+        value = arr[start] + arr[left] + arr[right]
+        if value > 0:
+            right -= 1
+        elif value < 0:
+            left += 1
+        else:
+            idx = bisect_left(arr, arr[right], lo=left + 1, hi=right)
+            answer += right - idx + 1
+            left += 1
+
 print(answer)
