@@ -1,9 +1,12 @@
+from sys import stdin
+
+input = lambda: stdin.readline().rstrip()
+
 n = int(input())
-a = list(map(int, input().split()))
-dp = [0 for i in range(n)]
-for i in range(n):
+arr = list(map(int, input().split()))
+dp = [1 for _ in range(n)]
+for i in range(1, n):
     for j in range(i):
-        if a[i] > a[j] and dp[i] < dp[j]:
-            dp[i] = dp[j]
-    dp[i] += 1
+        if arr[i] > arr[j] and dp[i] < dp[j] + 1:
+            dp[i] = dp[j] + 1
 print(max(dp))
