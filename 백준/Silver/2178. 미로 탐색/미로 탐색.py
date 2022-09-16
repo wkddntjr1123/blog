@@ -1,35 +1,38 @@
 from collections import deque
-from sys import stdin
 
-input = stdin.readline
+
 n, m = map(int, input().split())
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
-board = [list(map(int, input().rstrip())) for _ in range(n)]
-visited = [[False for _ in range(m)] for _ in range(n)]
+board = []
+for _ in range(n):
+    board.append([int(char) for char in input()])
 
 
-def bfs(x, y):
-    global n, m, board, visited
-    q = deque()
-    q.append((x, y))
-    visited[x][y] = True
-    level = 0
-    while q:
-        level += 1
-        for _ in range(len(q)):
-            x, y = q.popleft()
-            if x == n - 1 and y == m - 1:
-                return level
-            for i in range(4):
+def process(board: list):
+    visited = [[False] * len(board[0]) for _ in range(len(board))]
+
+    def bfs():
+        # visited[0][0] = True
+        q = deque()
+        q.append((0, 0, 1))
+        dx = [-1, 0, 1, 0]
+        dy = [0, -1, 0, 1]
+        while q:
+            x, y, _level = q.popleft()
+            if (x, y) == (len(board) - 1, len(board[0]) - 1):
+                return _level
+            for i in range(len(dx)):
                 adj_x, adj_y = x + dx[i], y + dy[i]
-                if (
-                    0 <= adj_x < n
-                    and 0 <= adj_y < m
-                    and not visited[adj_x][adj_y]
-                    and board[adj_x][adj_y] == 1
-                ):
-                    q.append((adj_x, adj_y))
-                    visited[adj_x][adj_y] = True
+                # out of index
+                if adj_x < 0 or adj_y < 0 or adj_x >= len(board) or adj_y >= len(board[0]):
+                    continue
+                # already visited or 0
+                if visited[adj_x][adj_y] or (board[adj_x][adj_y] != 1):
+                    continue
+                visited[adj_x][adj_y] = True
+                q.append((adj_x, adj_y, _level + 1))
 
-print(bfs(0, 0))
+    result = bfs()
+    print(result)
+
+
+process(board)
