@@ -1,19 +1,19 @@
-from sys import stdin
-
-input = stdin.readline
-
-stack = []
-
-s = input().rstrip()
-res = 0
-for i in range(len(s)):
-    if s[i] == "(":
-        stack.append("(")
-    else:
-        if s[i - 1] == "(":  # lazer
-            stack.pop()
-            res += len(stack)
-        else:  # not lazer
-            stack.pop()
-            res += 1
-print(res)
+def process(s: str) -> int:
+    stick = 0
+    result = 0
+    for i in range(len(s)):
+        # 막대+1
+        if s[i] == "(":
+            stick += 1
+        else:
+            stick -= 1
+            # 레이저
+            if s[i - 1] == "(":
+                result += stick
+            # 막대-1
+            elif s[i - 1] == ")":
+                result += 1
+    return result
+    
+s = input()
+print(process(s))
