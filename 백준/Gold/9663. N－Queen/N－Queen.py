@@ -1,32 +1,32 @@
 from sys import stdin
 
+
 input = stdin.readline
 
 n = int(input())
 
-visited_col = [False] * n
-visited_slash = set()
-visited_r_slash = set()
-res = 0
+visitedCol = [False for _ in range(n)]
+visitedSlash = [False for _ in range(2 * n)]
+visitedBackSlash = [False for _ in range(2 * n)]
 
-def dfs(k):
-    if k == n:
-        global res
-        res += 1
+answer = 0
+
+def func(i):
+    if i == n:
+        global answer
+        answer += 1
         return
-    for col in range(n):
-        if (
-            not visited_col[col]
-            and (col - k) not in visited_slash
-            and (k + col) not in visited_r_slash
-        ):
-            visited_col[col] = True
-            visited_slash.add(col - k)
-            visited_r_slash.add(k + col)
-            dfs(k + 1)
-            visited_col[col] = False
-            visited_slash.remove(col - k)
-            visited_r_slash.remove(k + col)
+    for j in range(n):
+        if visitedCol[j] or visitedSlash[i - j + n] or visitedBackSlash[i + j]:
+            continue
+        visitedCol[j] = True
+        visitedSlash[i - j + n] = True
+        visitedBackSlash[i + j] = True
+        func(i + 1)
+        visitedCol[j] = False
+        visitedSlash[i - j + n] = False
+        visitedBackSlash[i + j] = False
 
-dfs(0)
-print(res)
+
+func(0)
+print(answer)
