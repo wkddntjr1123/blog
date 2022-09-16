@@ -1,23 +1,25 @@
-from sys import stdin
-
-input = stdin.readline
-
 n, r, c = map(int, input().split())
 
-result = 0
 
-def Z(k, x, y):
-    global r, c, result
-    if k == -1:
-        print(result)
-        exit()
-    if not (x <= r < (x + 2**k)) or not (y <= c < (y + 2**k)):
-        result += (2**k) ** 2
-        return
-    center = (2**k) // 2
-    Z(k - 1, x, y)
-    Z(k - 1, x, y + center)
-    Z(k - 1, x + center, y)
-    Z(k - 1, x + center, y + center)
+def process(n, r, c) -> None:
+    if n == 0:
+        return 0
+    order_value = 0
+    width = 2**n
+    reduced = width // 2
+    top = True if r < reduced else False
+    left = True if c < reduced else False
+    # 1사분면
+    if left and top:
+        return order_value + process(n - 1, r, c)
+    # 2사분면
+    if not left and top:
+        return order_value + reduced**2 + process(n - 1, r, c - reduced)
+    # 3사분면
+    if left and not top:
+        return order_value + (reduced**2) * 2 + process(n - 1, r - reduced, c)
+    # 4사분면
+    if not left and not top:
+        return order_value + (reduced**2) * 3 + process(n - 1, r - reduced, c - reduced)
 
-Z(n, 0, 0)
+print(process(n, r, c))
