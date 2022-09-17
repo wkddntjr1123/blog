@@ -1,14 +1,22 @@
 from sys import stdin
-import re
+from functools import cmp_to_key
 
 input = stdin.readline
 
-n = int(input())
-str_list = []
-for _ in range(n):
-    str_list.append(input().rstrip())
-
-str_list.sort(key=lambda x: (len(x), sum(map(int, re.findall("\d", x))), x))
+arr = [input().rstrip() for _ in range(int(input()))]
 
 
-print(*str_list, sep="\n", end="")
+def compare(a, b):
+    if len(a) != len(b):
+        return len(a) - len(b)
+    numberConverter = lambda c: int(c) if c.isdigit() else 0
+    sumA = sum(map(numberConverter, a))
+    sumB = sum(map(numberConverter, b))
+    if sumA != sumB:
+        return sumA - sumB
+    return -1 if a < b else 0
+
+
+arr.sort(key=cmp_to_key(compare))
+
+print("\n".join(arr))
