@@ -1,18 +1,23 @@
+from collections import defaultdict, deque
 from sys import maxsize, stdin
-
 
 input = stdin.readline
 
-x = int(input())
-table = [-1 for _ in range(x + 1)]
-table[1] = 0
-for i in range(2, x + 1):
-    table[i] = (
-        min(
-            table[i - 1],
-            table[i // 2] if i % 2 == 0 else maxsize,
-            table[i // 3] if i % 3 == 0 else maxsize,
-        )
-        + 1
-    )
-print(table[x])
+n = int(input())
+q = deque([n])
+dist = [-1 for _ in range(n + 1)]
+dist[n] = 0
+while q:
+    cur = q.popleft()
+    if cur == 1:
+        print(dist[cur])
+        exit()
+    if cur % 2 == 0 and dist[cur // 2] == -1:
+        q.append(cur // 2)
+        dist[cur // 2] = dist[cur] + 1
+    if cur % 3 == 0 and dist[cur // 3] == -1:
+        q.append(cur // 3)
+        dist[cur // 3] = dist[cur] + 1
+    if dist[cur - 1] == -1:
+        q.append(cur - 1)
+        dist[cur - 1] = dist[cur] + 1
