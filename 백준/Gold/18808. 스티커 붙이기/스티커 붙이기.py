@@ -2,48 +2,51 @@ from sys import stdin
 
 input = stdin.readline
 
-
-def rotate(sticker):
-    return list(map(list, zip(*sticker[::-1])))
-
-
-def valid_pos(board, sticker, x, y):
-    val_pos = []
-    for i in range(x, x + len(sticker)):
-        for j in range(y, y + len(sticker[0])):
-            if sticker[i - x][j - y] == 1:
-                if board[i][j] == 0:  # 붙이기 가능
-                    val_pos.append((i, j))
-                else:
-                    return False
-    for i, j in val_pos:
-        board[i][j] = 1
-    return True
-
-
 n, m, k = map(int, input().split())
 board = [[0 for _ in range(m)] for _ in range(n)]
 stickers = []
 for _ in range(k):
-    r, _ = map(int, input().split())
+    r, c = map(int, input().split())
     stickers.append([list(map(int, input().split())) for _ in range(r)])
+answer = 0
+
+
+def rotate(sticker):
+    w, h = len(sticker), len(sticker[0])
+    rotatedSticker = [[0 for _ in range(w)] for _ in range(h)]
+    for i in range(w):
+        for j in range(h):
+            rotatedSticker[j][w - i - 1] = sticker[i][j]
+    return rotatedSticker
+
+
+def attach(board, sticker, boardX, boardY):
+    w, h = len(sticker), len(sticker[0])
+    changedPos = []
+    for i in range(w):
+        for j in range(h):
+            if sticker[i][j] == 1:
+                if board[boardX + i][boardY + j] == 1:
+                    return False
+                changedPos.append((boardX + i, boardY + j))
+    for x, y in changedPos:
+        board[x][y] = 1
+    return True
+
 
 for sticker in stickers:
-    find = False
-    for _ in range(4):  # 회전
-        for i in range(n - len(sticker) + 1):
-            for j in range(m - len(sticker[0]) + 1):
-                if valid_pos(board, sticker, i, j):
-                    find = True
+    for _ in range(4):
+        isAttached = False
+        w, h = len(sticker), len(sticker[0])
+        for x in range(n - w + 1):
+            for y in range(m - h + 1):
+                if attach(board, sticker, x, y):
+                    isAttached = True
                     break
-            if find:
+            if isAttached:
                 break
-        if find:
+        if isAttached:
             break
-        else:
-            sticker = rotate(sticker)
+        sticker = rotate(sticker)
 
-answer = 0
-for line in board:
-    answer += line.count(1)
-print(answer)
+print(sum(map(sum, board)))

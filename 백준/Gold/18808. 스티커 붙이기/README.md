@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 117248 KB, 시간: 232 ms
+메모리: 116396 KB, 시간: 204 ms
 
 ### 분류
 
@@ -45,12 +45,12 @@
 
 	<p>이 중에서 가장 위쪽의 위치, 가능한 가장 위쪽의 위치가 여러 개이면 그 중에서 가장 왼쪽의 위치는 첫 번째이다. 스티커를 붙인 후 노트북의 모양은 아래와 같다.</p>
 
-	<p style="text-align: center;"><img alt="" src=""></p>
+	<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/d3baa057-00b3-4f8a-861c-1ccfe0441584/-/preview/"></p>
 	</li>
 	<li>
 	<p>두 번째 스티커는 회전 없이 온전히 붙일 수 있는 공간이 없다. 그러나 시계 방향으로 90도 회전한 후에는 붙일 수 있는 공간이 1개 생긴다. 해당 공간에 스티커를 붙인 후 노트북의 모양은 아래와 같다.</p>
 
-	<p style="text-align: center;"><img alt="" src=""></p>
+	<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/92a0b86c-72bb-4843-aeca-7d1b751b6f3d/-/preview/"></p>
 	</li>
 	<li>
 	<p>세 번째 스티커는 스티커를 시계방향으로 0, 90, 180, 270도 회전시킨 모양에 대해 전부 확인을 해도 스티커를 붙일 수 있는 공간이 없다. 그러므로 해당 스티커를 붙이지 않고 버린다.</p>
@@ -58,7 +58,7 @@
 	<li>
 	<p>네 번째 스티커는 스티커를 시계방향으로 0, 90, 180도 회전 시킨 모양에 대해 온전히 붙일 수 있는 공간이 없다. 그러나 시계 방향으로 270도 회전한 후에는 공간이 1개 생긴다. 스티커를 붙인 후 노트북의 모양은 아래와 같다. 최종적으로 노트북의 18칸이 스티커로 채워졌다.</p>
 
-	<p style="text-align: center;"><img alt="" src=""></p>
+	<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/ad463bb4-f424-4fa5-92be-05b78ad5ff29/-/preview/"></p>
 	</li>
 </ol>
 
