@@ -1,17 +1,16 @@
-from sys import stdin
+from sys import maxsize, stdin
 
 input = stdin.readline
 
-n = int(input().rstrip())
-colors = [list(map(int, input().split())) for _ in range(n)]
-dp = [[False for _ in range(3)] for _ in range(n)]
+n = int(input())
+dp = [[maxsize] * 3 for _ in range(n)]
+rgbCost = []
+for _ in range(n):
+    rgbCost.append(tuple(map(int, input().split())))
+dp[0] = rgbCost[0]
 
-if n == 1:
-    print(min(colors[0]))
-else:
-    dp[0] = colors[0]
-    for i in range(1, n):
-        dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]) + colors[i][0]
-        dp[i][1] = min(dp[i - 1][0], dp[i - 1][2]) + colors[i][1]
-        dp[i][2] = min(dp[i - 1][0], dp[i - 1][1]) + colors[i][2]
-    print(min(dp[n - 1]))
+for i in range(1, n):
+    dp[i][0] = rgbCost[i][0] + min(dp[i - 1][1], dp[i - 1][2])
+    dp[i][1] = rgbCost[i][1] + min(dp[i - 1][0], dp[i - 1][2])
+    dp[i][2] = rgbCost[i][2] + min(dp[i - 1][0], dp[i - 1][1])
+print(min(dp[-1]))
