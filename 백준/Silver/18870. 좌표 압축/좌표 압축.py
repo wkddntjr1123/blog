@@ -1,12 +1,23 @@
 from sys import stdin
 
-
 input = stdin.readline
+
+
+def biLeft(arr, target):
+    lo, hi = 0, len(arr)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if target <= arr[mid]:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+
+
 n = int(input())
-origin_arr = list(map(int, input().split()))
-sorted_set = sorted(set(origin_arr))
-res_dict = dict()
-for i in range(len(sorted_set)):
-    res_dict[sorted_set[i]] = i
-for num in origin_arr:
-    print(res_dict[num], end=" ")
+arr = list(map(int, input().split()))
+sortedArr = sorted(set(arr))
+
+
+for num in arr:
+    print(biLeft(sortedArr, num), end=" ")
