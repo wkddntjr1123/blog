@@ -8,7 +8,7 @@
 
 ### 분류
 
-두 포인터(two_pointer)
+누적 합(prefix_sum), 두 포인터(two_pointer)
 
 ### 문제 설명
 
