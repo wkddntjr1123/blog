@@ -1,22 +1,22 @@
 from sys import maxsize, stdin
 
-
 input = stdin.readline
+
 n, m = map(int, input().split())
 arr = [int(input()) for _ in range(n)]
 arr.sort()
+answer = maxsize
 
-left = right = 0
-min_res = maxsize
-while True:
-    if right == n:
-        break
-    if left == right:
-        right += 1
+l, r = 0, 0
+while r < len(arr):
+    if l == r:
+        r += 1
         continue
-    if arr[right] - arr[left] >= m:
-        min_res = min(min_res, arr[right] - arr[left])
-        left += 1
+    dist = arr[r] - arr[l]
+    if m <= dist:
+        answer = min(answer, dist)
+        l += 1
     else:
-        right += 1
-print(min_res) if m != 0 else print(0)
+        r += 1
+
+print(0 if answer == maxsize and m == 0 else answer)
