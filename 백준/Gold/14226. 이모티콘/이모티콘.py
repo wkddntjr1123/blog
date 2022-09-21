@@ -9,23 +9,22 @@ target = int(input())
 
 q = deque([(1, 0, 0)])
 
-visited = [[False for _ in range(2001)] for _ in range(2001)]
-visited[1][0] = True
-
+visited = set()
+visited.add((1, 2))
 while q:
     cur, clip, time = q.popleft()
     if cur == target:
         print(time)
         break
     # 1. copy to clipboard
-    if not visited[cur][cur]:
+    if (cur, cur) not in visited:
         q.append((cur, cur, time + 1))
-        visited[cur][cur] = True
+        visited.add((cur, cur))
     # 2. paste clipboard
-    if cur + clip < 2000 and not visited[cur + clip][clip]:
+    if cur + clip < 2000 and (cur + clip, clip) not in visited:
         q.append((cur + clip, clip, time + 1))
-        visited[cur + clip][clip] = True
+        visited.add((cur + clip, clip))
     # 3. -1
-    if cur - 1 > 0 and not visited[cur - 1][clip]:
+    if cur - 1 > 0 and (cur - 1, clip) not in visited:
         q.append((cur - 1, clip, time + 1))
-        visited[cur - 1][clip] = True
+        visited.add((cur - 1, clip))
