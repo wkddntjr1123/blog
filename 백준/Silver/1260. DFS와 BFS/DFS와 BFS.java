@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 public class Main {
     int n, m, startV;
+    static StringBuilder sb = new StringBuilder();
     public void solution() throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int[] s = Stream.of(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
@@ -23,13 +24,14 @@ public class Main {
             graph[i].sort(Comparator.naturalOrder());
         }
         dfs(graph, startV, new boolean[n + 1]);
-        System.out.println();
+        sb.append("\n");
         bfs(graph, startV, new boolean[n + 1]);
+        System.out.println(sb.toString());
     }
 
     public void dfs(List<Integer>[] graph, int v, boolean[] visited){
         visited[v] = true;
-        System.out.print(v + " ");
+        sb.append(v + " ");
         for(int nv: graph[v]){
             if(!visited[nv]){
                 dfs(graph, nv, visited);
@@ -43,7 +45,7 @@ public class Main {
         q.add(startV);
         while(q.size() > 0 ){
             int v = q.poll();
-            System.out.print(v + " ");
+            sb.append(v + " ");
             for(int nv: graph[v]){
                 if(visited[nv]){
                     continue;
